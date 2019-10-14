@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallThrow : MonoBehaviour {
 
-    [SerializeField] GameObject trajectoryDotPrefab;
+    [SerializeField] private DotPool dotPool;
 
     private Vector2 startLaunchVelocity = new Vector2(2f, 8f);
     private Vector2 startPosition = Vector2.zero;
@@ -14,7 +14,7 @@ public class BallThrow : MonoBehaviour {
     private bool launched = false;
     private Rigidbody2D rigidBody;
     private int levelLauncModifier = 1;
-    private int DotsToShow = 10;
+    private int DotsToShow = 20;
     private float dotTimeStep = 0.1f;
 
     public int LaunchModifier
@@ -45,17 +45,24 @@ public class BallThrow : MonoBehaviour {
         if(Input.GetKey(KeyCode.Mouse0))
         {
             launchVelocity += levelLauncModifier * Time.deltaTime * 0.3f * Vector2.one;
+            GenerateTrajectory();
         }
         if (!launched && Input.GetKeyUp(KeyCode.Mouse0))
         {
-
-                for (int i = 0; i < DotsToShow; i++)
-                {
-                    GameObject trajectoryDot = Instantiate(trajectoryDotPrefab);
-                    trajectoryDot.transform.position = CalculatePosition(dotTimeStep* i);
-                }
-
+           
             Launch();
+        }
+    }
+
+    private void GenerateTrajectory()
+    {
+        startPosition = (Vector2)transform.position;
+        dotPool.ResetPool();
+        for (int i = 0; i < DotsToShow; i++)
+        {
+            GameObject trajectoryDot = dotPool.GetObjectFromPool();
+            trajectoryDot.transform.position = CalculatePosition(dotTimeStep * i);
+            trajectoryDot.SetActive(true);
         }
     }
 
