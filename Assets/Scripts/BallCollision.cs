@@ -7,13 +7,14 @@ public class BallCollision : MonoBehaviour
 
     }
 
-    private void OnCollsionEnter2D(Collision2D col)
-    {
-        Debug.Log("Collided!");
-    }
-
     private void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log("Triggered!");
+        bool isHole = col.gameObject.layer == 9;
+        if (isHole)
+        {
+            Debug.Log("isHole!");
+            gameObject.layer = 8;
+        }
     }
 }

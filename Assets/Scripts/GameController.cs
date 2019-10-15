@@ -12,6 +12,7 @@ public class GameController : Singleton<GameController>
     private int currentLevel = 0;
 
     public int CurrentLevel { get { return currentLevel; } }
+    public GameObject Target {  get { return target; } }
 
     private void Start ()
     {
@@ -55,8 +56,6 @@ public class GameController : Singleton<GameController>
 
         playerBall.transform.position = new Vector2(ballSpawnX,ballSpawnY);
         target.transform.position = new Vector2(flagSpawnX, flagSpawnY);
-
-        Debug.Log(playerBall.transform.position + "   " + target.transform.position);
     }
 
     private void OnPlayerFailed()
