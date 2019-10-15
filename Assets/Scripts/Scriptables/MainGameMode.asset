@@ -9,9 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 236addf7915140e43a62f1659384ca8c, type: 3}
-  m_Name: GameMode
+  m_Name: MainGameMode
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1925844710313424, guid: 5b54b0f0285c67c46ab99158f738c4bc,
     type: 2}
+  minBallSpawnCoordinates: {x: -6.5, y: -2.8}
+  maxBallSpawnCoordinates: {x: -1.5, y: -2.8}
   targetPrefab: {fileID: 1420786099423870, guid: ee0f2d91a77df954a85442f8bbd754ca,
     type: 2}
+  minflagSpawnCoordinates: {x: 1, y: -2.99}
+  maxflagSpawnCoordinates: {x: 6, y: -2.99}
+  launchOffsetPerLevel: 0

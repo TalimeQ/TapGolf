@@ -23,6 +23,7 @@ public class GameController : Singleton<GameController>
         ControllerInit();
         SpawnObjects();
         InitializePrefabs();
+        RandomizeSpawnPosition();
     }
 
     private void ControllerInit()
@@ -43,6 +44,19 @@ public class GameController : Singleton<GameController>
         {
             playerBallComponent.Init();
         }
+    }
+
+    private void RandomizeSpawnPosition()
+    {
+        float ballSpawnX = UnityEngine.Random.Range(currentGameMode.minBallSpawnCoordinates.x, currentGameMode.maxBallSpawnCoordinates.x);
+        float ballSpawnY = UnityEngine.Random.Range(currentGameMode.minBallSpawnCoordinates.y, currentGameMode.maxBallSpawnCoordinates.y);
+        float flagSpawnX = UnityEngine.Random.Range(currentGameMode.minflagSpawnCoordinates.x, currentGameMode.maxflagSpawnCoordinates.x);
+        float flagSpawnY = UnityEngine.Random.Range(currentGameMode.minflagSpawnCoordinates.y, currentGameMode.maxflagSpawnCoordinates.y);
+
+        playerBall.transform.position = new Vector2(ballSpawnX,ballSpawnY);
+        target.transform.position = new Vector2(flagSpawnX, flagSpawnY);
+
+        Debug.Log(playerBall.transform.position + "   " + target.transform.position);
     }
 
     private void OnPlayerFailed()

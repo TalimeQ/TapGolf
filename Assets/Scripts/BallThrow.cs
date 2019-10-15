@@ -16,7 +16,7 @@ public class BallThrow : MonoBehaviour
     private bool launched = false;
     private Rigidbody2D rigidBody;
     private int levelLauncModifier = 1;
-    private int DotsToShow = 20;
+    private int DotsToShow = 30;
     private float dotTimeStep = 0.1f;
 
 
