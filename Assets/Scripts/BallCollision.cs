@@ -11,9 +11,10 @@ public class BallCollision : MonoBehaviour
     private UnityEvent onPlayerScored = new UnityEvent();
     private UnityEvent onPlayerLost = new UnityEvent();
 
-    public void Init(UnityAction scoreCallback)
+    public void Init(UnityAction scoreCallback, UnityAction loseCallback)
     {
         onPlayerScored.AddListener(scoreCallback);
+        onPlayerLost.AddListener(loseCallback);
     }
 
     public void OnResetRequest()
@@ -28,6 +29,10 @@ public class BallCollision : MonoBehaviour
         {
             TurnOnTimer();
             gameObject.layer = 8;
+        }
+        else
+        {
+            onPlayerLost.Invoke();
         }
     }
 
@@ -54,11 +59,12 @@ public class BallCollision : MonoBehaviour
     }
 
     private void OnTriggerStay2D(Collider2D other)
-    {
+    { 
         bool shouldScore = isCounting && scoreTime < Time.time;
         if (shouldScore)
         {
-            Debug.Log("Trigger score!");
+            Debug.Log("Staying!");
+            Reset();
             onPlayerScored.Invoke();
         }
     }

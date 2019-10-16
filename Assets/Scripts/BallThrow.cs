@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.Events;
 using UnityEngine;
+using System;
 
 public class BallThrow : MonoBehaviour
 {
@@ -15,22 +15,24 @@ public class BallThrow : MonoBehaviour
 
     private bool launched = false;
     private Rigidbody2D rigidBody;
-    private int levelLauncModifier = 1;
-    private int DotsToShow = 30;
-    private float dotTimeStep = 0.1f;
+    private int levelLaunchModifier = 1;
+    private int dotsToShow = 60;
+    private float dotTimeStep = 0.05f;
+    private UnityEvent onLoseCallback = new UnityEvent();
 
-
-    public void Init()
+    public void Init(UnityEvent onScoreCallback)
     {
         if (rigidBody == null)
         {
             rigidBody = GetComponent<Rigidbody2D>();
         }
+        onScoreCallback.AddListener(() => launched = false);
     }
 
     public void OnResetRequest()
     {
-
+        rigidBody.velocity = Vector2.zero;
+        launched = false;
     }
 
     private void Update()
@@ -68,7 +70,7 @@ public class BallThrow : MonoBehaviour
     {
         dotPool.ResetPool();
         startPosition = (Vector2)transform.position;
-        for (int i = 0; i < DotsToShow; i++)
+        for (int i = 0; i < dotsToShow; i++)
         {
             GameObject trajectoryDot = dotPool.GetObjectFromPool();
             trajectoryDot.transform.position = CalculatePosition(dotTimeStep * i);
@@ -85,7 +87,7 @@ public class BallThrow : MonoBehaviour
 
     private void CalculateLaunchVelocity()
     {
-        launchVelocity += levelLauncModifier * Time.deltaTime * 0.3f * velocityModifier;
+        launchVelocity += levelLaunchModifier * Time.deltaTime * 0.3f * velocityModifier;
     }
 
     private Vector2 CalculatePosition(float elapsedTime)

@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class GameController : Singleton<GameController>
 {
     [SerializeField] GameMode currentGameMode;
+    [SerializeField] UiController uiController;
 
     private GameObject playerBall;
     private GameObject target;
-    private int currentLevel = 0;
+    private UnityEvent scoreEvent = new UnityEvent();
+    private int currentPlayerScore = 0;
 
-    public int CurrentLevel { get { return currentLevel; } }
-    public GameObject Target {  get { return target; } }
+    public int CurrentLevel { get { return currentPlayerScore; } }
 
     private void Start ()
     {
@@ -29,7 +28,7 @@ public class GameController : Singleton<GameController>
 
     private void ControllerInit()
     {
-        currentLevel = 0;
+        currentPlayerScore = 0;
     }
 
     private void SpawnObjects()
@@ -43,7 +42,7 @@ public class GameController : Singleton<GameController>
         Ball playerBallComponent = playerBall.GetComponent<Ball>();
         if(playerBallComponent != null)
         {
-            playerBallComponent.Init(OnPlayerScored);
+            playerBallComponent.Init(OnPlayerScored,OnPlayerFailed,scoreEvent);
         }
     }
 
@@ -70,7 +69,14 @@ public class GameController : Singleton<GameController>
 
     private void OnPlayerScored()
     {
-        Debug.Log("Scored!");
-        currentLevel++;
+        RandomizeSpawnPosition();
+        IncreaseScore();
+        scoreEvent.Invoke();
+    }
+
+    private void IncreaseScore()
+    {
+        currentPlayerScore++;
+        uiController.UpdateScore(currentPlayerScore);
     }
 }

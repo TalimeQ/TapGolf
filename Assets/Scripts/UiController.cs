@@ -1,16 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using TMPro;
 
 public class UiController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    [SerializeField] private GameObject loseScreen;
+    [SerializeField] private TextMeshProUGUI scoreText;
+
+    public void ToggleLoseScreen()
+    {
+        loseScreen.SetActive(!loseScreen.activeInHierarchy);
+    }
+
+    public void UpdateScore(int newScore)
+    {
+        scoreText.SetText("" + newScore);
+    }
 }

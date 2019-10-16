@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 // Simplified as we pool only trajectory dots
-
 public class DotPool : MonoBehaviour {
 
     [SerializeField] private GameObject pooledObject;
@@ -34,6 +32,7 @@ public class DotPool : MonoBehaviour {
     private GameObject CreateObject()
     {
         GameObject createdObject = Instantiate(pooledObject);
+        createdObject.hideFlags = HideFlags.HideInHierarchy;
         objectPool.Add(createdObject);
         return pooledObject;
     }
