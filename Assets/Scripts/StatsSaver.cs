@@ -15,6 +15,10 @@ public class StatsSaver : MonoBehaviour
                 PlayerPrefs.SetInt(scoreSaveKeyName, scoreToSave);
            }
        }
+       else
+       {
+            PlayerPrefs.SetInt(scoreSaveKeyName, scoreToSave);
+       }
     }
 
     public int GetBestScore()

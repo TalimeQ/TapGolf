@@ -1043,6 +1043,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162a9a8576866b448ba0a114921b2f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentScoreText: {fileID: 304068615}
+  bestScoreText: {fileID: 1348745054}
 --- !u!1 &979388438
 GameObject:
   m_ObjectHideFlags: 0

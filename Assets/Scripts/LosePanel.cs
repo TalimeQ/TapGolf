@@ -3,8 +3,8 @@ using TMPro;
 
 public class LosePanel : MonoBehaviour {
 
-    private TextMeshProUGUI currentScoreText;
-    private TextMeshProUGUI bestScoreText;
+    [SerializeField] private TextMeshProUGUI currentScoreText;
+    [SerializeField] private TextMeshProUGUI bestScoreText;
 
     public void SetFinalScore(int currentScore, int bestScore)
     {

@@ -67,12 +67,19 @@ public class GameController : Singleton<GameController>
 
         playerBall.transform.position = new Vector2(ballSpawnX,ballSpawnY);
         target.transform.position = new Vector2(flagSpawnX, flagSpawnY);
+
+        Rigidbody2D rigidbodyComponent = playerBall.GetComponent<Rigidbody2D>();
+        if(rigidbodyComponent != null)
+        {
+            rigidbodyComponent.velocity = Vector2.zero;
+        }
     }
 
     private void OnPlayerFailed()
     {
         statsSaver.TrySaveBestScore(currentPlayerScore);
-        uiController.ToggleLoseScreen();
+        int bestScore = statsSaver.GetBestScore();
+        uiController.ToggleLoseScreen(currentPlayerScore,bestScore);
     }
 
     private void OnPlayerScored()

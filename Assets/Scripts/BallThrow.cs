@@ -44,16 +44,16 @@ public class BallThrow : MonoBehaviour
     {
         if (!launched)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetButtonDown("Fire1"))
             {
                 InputStart();
             }
-            if (Input.GetKey(KeyCode.Mouse0))
+            if (Input.GetButton("Fire1"))
             {
                 CalculateLaunchVelocity();
                 GenerateTrajectory();
             }
-            if (Input.GetKeyUp(KeyCode.Mouse0))
+            if (Input.GetButtonUp("Fire1"))
             {
                 Launch();
             }
