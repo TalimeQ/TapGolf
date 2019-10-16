@@ -6,9 +6,9 @@ public class Ball : MonoBehaviour
     [SerializeField] BallThrow throwComponent;
     [SerializeField] BallCollision collisionComponent;
 
-    public void Init(UnityAction scoreCallback, UnityAction loseCallback, UnityEvent scoreListener)
+    public void Init(UnityAction scoreCallback, UnityAction loseCallback, UnityEvent scoreListener, ThrowData initialData)
     {
-        throwComponent.Init(scoreListener);
+        throwComponent.Init(scoreListener, initialData);
         collisionComponent.Init(scoreCallback, loseCallback, throwComponent);
     }
 

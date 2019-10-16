@@ -19,4 +19,6 @@ MonoBehaviour:
     type: 2}
   minflagSpawnCoordinates: {x: 1, y: -2.99}
   maxflagSpawnCoordinates: {x: 6, y: -2.99}
-  launchOffsetPerLevel: 0
+  launchOffsetPerLevel: 0.3
+  initialVelocity: {x: 1, y: 1}
+  VelocityModifier: {x: 1, y: 2}

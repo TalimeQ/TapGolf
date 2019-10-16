@@ -7,11 +7,9 @@ public class BallThrow : MonoBehaviour
 
     [SerializeField] private DotPool dotPool;
 
-    private Vector2 startLaunchVelocity = new Vector2(0f, 2f);
+    private ThrowData throwData;
     private Vector2 startPosition = Vector2.zero;
-    private Vector2 gravity = (Vector2)Physics.gravity;
     private Vector2 launchVelocity;
-    private Vector2 velocityModifier = new Vector2(1f, 2f);
 
     private bool launched = false;
     private Rigidbody2D rigidBody;
@@ -21,13 +19,14 @@ public class BallThrow : MonoBehaviour
 
     public bool Launched {  get { return launched; } }
 
-    public void Init(UnityEvent onScoreCallback)
+    public void Init(UnityEvent onScoreCallback, ThrowData initialData)
     {
         if (rigidBody == null)
         {
             rigidBody = GetComponent<Rigidbody2D>();
         }
         onScoreCallback.AddListener(() => launched = false);
+        throwData = initialData;
     }
 
     public void OnResetRequest()
@@ -63,7 +62,7 @@ public class BallThrow : MonoBehaviour
 
     private void InputStart()
     {
-        launchVelocity = startLaunchVelocity;
+        launchVelocity = throwData.startLaunchVelocity;
         startPosition = (Vector2)transform.position;
     }
 
@@ -88,13 +87,26 @@ public class BallThrow : MonoBehaviour
 
     private void CalculateLaunchVelocity()
     {
-        launchVelocity += levelLaunchModifier * Time.deltaTime * 0.3f * velocityModifier;
+        launchVelocity += levelLaunchModifier * Time.deltaTime * 0.3f * throwData.velocityModifier;
     }
 
     private Vector2 CalculatePosition(float elapsedTime)
     {
-        return gravity * elapsedTime * elapsedTime * 0.5f +
+        return throwData.gravity * elapsedTime * elapsedTime * 0.5f +
                    launchVelocity * elapsedTime + startPosition;
     }
 
+}
+public struct ThrowData
+{
+    public ThrowData(Vector2 startLaunchVelocity, Vector2 velocityModifier, Vector2 gravity)
+    {
+        this.startLaunchVelocity = startLaunchVelocity;
+        this.velocityModifier = velocityModifier;
+        this.gravity = gravity;
+    }
+
+    public Vector2 startLaunchVelocity;
+    public Vector2 velocityModifier;
+    public Vector2 gravity;
 }

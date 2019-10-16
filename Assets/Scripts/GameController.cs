@@ -53,7 +53,8 @@ public class GameController : Singleton<GameController>
         Ball playerBallComponent = playerBall.GetComponent<Ball>();
         if(playerBallComponent != null)
         {
-            playerBallComponent.Init(OnPlayerScored,OnPlayerFailed,scoreEvent);
+            ThrowData data = new ThrowData(currentGameMode.initialVelocity, currentGameMode.VelocityModifier, Physics2D.gravity);
+            playerBallComponent.Init(OnPlayerScored,OnPlayerFailed,scoreEvent,data);
         }
     }
 

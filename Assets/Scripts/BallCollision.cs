@@ -26,7 +26,6 @@ public class BallCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("Enter!");
         bool isHole = col.gameObject.layer == 9;
         if (isHole)
         {
