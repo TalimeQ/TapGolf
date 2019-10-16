@@ -12,10 +12,10 @@ public class GameController : Singleton<GameController>
     private UnityEvent scoreEvent = new UnityEvent();
     private int currentPlayerScore = 0;
 
-    public int CurrentLevel { get { return currentPlayerScore; } }
-
     public void Restart()
     {
+        currentPlayerScore = 0;
+
         Ball playerBallComponent = playerBall.GetComponent<Ball>();
         if (playerBallComponent != null)
         {

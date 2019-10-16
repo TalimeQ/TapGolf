@@ -1,5 +1,6 @@
 ﻿using UnityEngine.Events;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using System;
 
 public class BallThrow : MonoBehaviour
@@ -42,7 +43,7 @@ public class BallThrow : MonoBehaviour
 
     private void ParseInputs()
     {
-        if (!launched)
+        if (!launched && !EventSystem.current.IsPointerOverGameObject())
         {
             if (Input.GetButtonDown("Fire1"))
             {
