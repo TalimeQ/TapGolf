@@ -18,7 +18,8 @@ public class BallThrow : MonoBehaviour
     private int levelLaunchModifier = 1;
     private int dotsToShow = 60;
     private float dotTimeStep = 0.05f;
-    private UnityEvent onLoseCallback = new UnityEvent();
+
+    public bool Launched {  get { return launched; } }
 
     public void Init(UnityEvent onScoreCallback)
     {

@@ -5,6 +5,7 @@ public class GameController : Singleton<GameController>
 {
     [SerializeField] GameMode currentGameMode;
     [SerializeField] UiController uiController;
+    [SerializeField] StatsSaver statsSaver;
 
     private GameObject playerBall;
     private GameObject target;
@@ -12,6 +13,16 @@ public class GameController : Singleton<GameController>
     private int currentPlayerScore = 0;
 
     public int CurrentLevel { get { return currentPlayerScore; } }
+
+    public void Restart()
+    {
+        Ball playerBallComponent = playerBall.GetComponent<Ball>();
+        if (playerBallComponent != null)
+        {
+            playerBallComponent.Reset();
+        }
+        RandomizeSpawnPosition();
+    }
 
     private void Start ()
     {
@@ -59,12 +70,8 @@ public class GameController : Singleton<GameController>
 
     private void OnPlayerFailed()
     {
-        Ball playerBallComponent = playerBall.GetComponent<Ball>();
-        if (playerBallComponent != null)
-        {
-            playerBallComponent.Reset();
-        }
-        RandomizeSpawnPosition();
+        statsSaver.TrySaveBestScore(currentPlayerScore);
+        uiController.ToggleLoseScreen();
     }
 
     private void OnPlayerScored()

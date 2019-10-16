@@ -7,12 +7,14 @@ public class BallCollision : MonoBehaviour
 
     private float scoreTime;
     private bool isCounting;
+    private BallThrow throwComponent;
 
     private UnityEvent onPlayerScored = new UnityEvent();
     private UnityEvent onPlayerLost = new UnityEvent();
 
-    public void Init(UnityAction scoreCallback, UnityAction loseCallback)
+    public void Init(UnityAction scoreCallback, UnityAction loseCallback, BallThrow throwComponent)
     {
+        this.throwComponent = throwComponent;
         onPlayerScored.AddListener(scoreCallback);
         onPlayerLost.AddListener(loseCallback);
     }
@@ -24,13 +26,14 @@ public class BallCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log("Enter!");
         bool isHole = col.gameObject.layer == 9;
         if (isHole)
         {
             TurnOnTimer();
             gameObject.layer = 8;
         }
-        else
+        else if(throwComponent.Launched)
         {
             onPlayerLost.Invoke();
         }
@@ -63,7 +66,6 @@ public class BallCollision : MonoBehaviour
         bool shouldScore = isCounting && scoreTime < Time.time;
         if (shouldScore)
         {
-            Debug.Log("Staying!");
             Reset();
             onPlayerScored.Invoke();
         }

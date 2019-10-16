@@ -9,7 +9,7 @@ public class Ball : MonoBehaviour
     public void Init(UnityAction scoreCallback, UnityAction loseCallback, UnityEvent scoreListener)
     {
         throwComponent.Init(scoreListener);
-        collisionComponent.Init(scoreCallback, loseCallback);
+        collisionComponent.Init(scoreCallback, loseCallback, throwComponent);
     }
 
     public void Reset()
