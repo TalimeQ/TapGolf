@@ -1,14 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class BallCollision : MonoBehaviour
 {
-    private float scoreTime;
     [SerializeField] private float scoreDelay = 2.0f;
+
+    private float scoreTime;
     private bool isCounting;
 
-    public void Init()
-    {
+    private UnityEvent onPlayerScored = new UnityEvent();
+    private UnityEvent onPlayerLost = new UnityEvent();
 
+    public void Init(UnityAction scoreCallback)
+    {
+        onPlayerScored.AddListener(scoreCallback);
+    }
+
+    public void OnResetRequest()
+    {
+        Reset();
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -29,7 +39,13 @@ public class BallCollision : MonoBehaviour
 
     private void OnTriggerLeft2D(Collider2D other)
     {
+        Reset();
+    }
+
+    private void Reset()
+    {
         TurnOffTimer();
+        gameObject.layer = 0;
     }
 
     private void TurnOffTimer()
@@ -42,7 +58,8 @@ public class BallCollision : MonoBehaviour
         bool shouldScore = isCounting && scoreTime < Time.time;
         if (shouldScore)
         {
-            Debug.Log("Scored!");
+            Debug.Log("Trigger score!");
+            onPlayerScored.Invoke();
         }
     }
 }

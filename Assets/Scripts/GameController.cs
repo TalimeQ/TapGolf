@@ -43,7 +43,7 @@ public class GameController : Singleton<GameController>
         Ball playerBallComponent = playerBall.GetComponent<Ball>();
         if(playerBallComponent != null)
         {
-            playerBallComponent.Init();
+            playerBallComponent.Init(OnPlayerScored);
         }
     }
 
@@ -60,11 +60,17 @@ public class GameController : Singleton<GameController>
 
     private void OnPlayerFailed()
     {
-
+        Ball playerBallComponent = playerBall.GetComponent<Ball>();
+        if (playerBallComponent != null)
+        {
+            playerBallComponent.Reset();
+        }
+        RandomizeSpawnPosition();
     }
 
     private void OnPlayerScored()
     {
+        Debug.Log("Scored!");
         currentLevel++;
     }
 }

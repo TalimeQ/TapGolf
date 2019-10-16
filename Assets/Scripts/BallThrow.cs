@@ -28,6 +28,11 @@ public class BallThrow : MonoBehaviour
         }
     }
 
+    public void OnResetRequest()
+    {
+
+    }
+
     private void Update()
     {
         ParseInputs();
