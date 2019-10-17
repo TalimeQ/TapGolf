@@ -92,7 +92,6 @@ public class BallThrow : MonoBehaviour
     private void GenerateTrajectory()
     {
         dotPool.ResetPool();
-        startPosition = (Vector2)transform.position;
         for (int i = 0; i < dotsToShow; i++)
         {
             GameObject trajectoryDot = dotPool.GetObjectFromPool();
@@ -115,20 +114,23 @@ public class BallThrow : MonoBehaviour
 
     private Vector2 CalculatePosition(float elapsedTime)
     {
-        
-       Vector2 CalculatedPosition = throwData.gravity * elapsedTime * elapsedTime * 0.5f +
+        Vector2 CalculatedPosition = throwData.gravity * elapsedTime * elapsedTime * 0.5f +
                    launchVelocity * elapsedTime + startPosition;
 
+        CheckIfOutOFBounds(CalculatedPosition);
+
+        return CalculatedPosition;
+    }
+
+    private void CheckIfOutOFBounds(Vector2 CalculatedPosition)
+    {
         Vector3 normalizedScreenPos = mainCamera.WorldToViewportPoint(CalculatedPosition);
 
         if (normalizedScreenPos.x > 1 && (normalizedScreenPos.y >= normalizedY && normalizedScreenPos.y <= 1))
         {
             Launch();
         }
-
-        return CalculatedPosition;
     }
-
 }
 
 public struct ThrowData
