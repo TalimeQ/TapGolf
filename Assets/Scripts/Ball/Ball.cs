@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] BallThrow throwComponent;
-    [SerializeField] BallCollision collisionComponent;
+    [SerializeField] private BallThrow throwComponent;
+    [SerializeField] private BallCollision collisionComponent;
 
     public void Init(UnityAction scoreCallback, UnityAction loseCallback, UnityEvent scoreListener, ThrowData initialData)
     {

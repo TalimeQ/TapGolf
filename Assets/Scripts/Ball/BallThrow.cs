@@ -1,7 +1,6 @@
 ﻿using UnityEngine.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
 
 public class BallThrow : MonoBehaviour
 {
@@ -30,9 +29,7 @@ public class BallThrow : MonoBehaviour
         }
         onScoreCallback.AddListener(OnPlayerScored);
         throwData = initialData;
-        mainCamera = Camera.main;
-        Vector3 startPos = new Vector3(0, initialData.ballspawnY, 0);
-        normalizedY = mainCamera.WorldToViewportPoint(startPos).y;
+        SetupScreenRelativeYThrowRange();
     }
 
     public void OnResetRequest()
@@ -40,6 +37,12 @@ public class BallThrow : MonoBehaviour
         ResetVelocity();
         levelLaunchModifier = 1.0f;
         launched = false;
+    }
+    private void SetupScreenRelativeYThrowRange()
+    {
+        mainCamera = Camera.main;
+        Vector3 startPos = new Vector3(0, throwData.ballspawnY, 0);
+        normalizedY = mainCamera.WorldToViewportPoint(startPos).y;
     }
 
     private void Update()
@@ -127,6 +130,7 @@ public class BallThrow : MonoBehaviour
     }
 
 }
+
 public struct ThrowData
 {
     public ThrowData(Vector2 startLaunchVelocity, Vector2 velocityModifier, Vector2 gravity, float offsetChangePerLevel, float ballspawnY)

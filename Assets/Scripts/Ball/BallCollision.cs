@@ -38,10 +38,13 @@ public class BallCollision : MonoBehaviour
         }
     }
 
-    private void TurnOnTimer()
+    private void OnTriggerStay2D(Collider2D other)
     {
-        scoreTime = Time.time + scoreDelay;
-        isCounting = true;
+        bool shouldScore = isCounting && scoreTime < Time.time;
+        if (shouldScore)
+        {
+            Score();
+        }
     }
 
     private void OnTriggerLeft2D(Collider2D other)
@@ -55,19 +58,15 @@ public class BallCollision : MonoBehaviour
         gameObject.layer = 0;
     }
 
+    private void TurnOnTimer()
+    {
+        scoreTime = Time.time + scoreDelay;
+        isCounting = true;
+    }
+
     private void TurnOffTimer()
     {
         isCounting = false;
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        Debug.Log("Staying!");
-        bool shouldScore = isCounting && scoreTime < Time.time;
-        if (shouldScore)
-        {
-            Score();
-        }
     }
 
     private void Score()

@@ -3,9 +3,9 @@ using UnityEngine.Events;
 
 public class GameController : Singleton<GameController>
 {
-    [SerializeField] GameMode currentGameMode;
-    [SerializeField] UiController uiController;
-    [SerializeField] StatsSaver statsSaver;
+    [SerializeField] private GameMode currentGameMode;
+    [SerializeField] private UiController uiController;
+    [SerializeField] private StatsSaver statsSaver;
 
     private GameObject playerBall;
     private GameObject target;
