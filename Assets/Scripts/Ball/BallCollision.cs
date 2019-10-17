@@ -61,7 +61,8 @@ public class BallCollision : MonoBehaviour
     }
 
     private void OnTriggerStay2D(Collider2D other)
-    { 
+    {
+        Debug.Log("Staying!");
         bool shouldScore = isCounting && scoreTime < Time.time;
         if (shouldScore)
         {

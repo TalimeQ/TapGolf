@@ -37,7 +37,7 @@ public class BallThrow : MonoBehaviour
 
     public void OnResetRequest()
     {
-        rigidBody.velocity = Vector2.zero;
+        ResetVelocity();
         levelLaunchModifier = 1.0f;
         launched = false;
     }
@@ -51,6 +51,11 @@ public class BallThrow : MonoBehaviour
     {
         launched = false;
         levelLaunchModifier += throwData.offsetChangePerLevel;
+        ResetVelocity();
+    }
+
+    private void ResetVelocity()
+    {
         rigidBody.velocity = Vector3.zero;
         rigidBody.angularVelocity = 0.0f;
     }
