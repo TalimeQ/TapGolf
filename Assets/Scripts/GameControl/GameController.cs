@@ -30,6 +30,14 @@ public class GameController : Singleton<GameController>
         Init();
 	}
 
+    private void Update()
+    {
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
     private void Init()
     {
         ControllerInit();
