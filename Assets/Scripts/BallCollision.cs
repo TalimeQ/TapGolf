@@ -65,8 +65,13 @@ public class BallCollision : MonoBehaviour
         bool shouldScore = isCounting && scoreTime < Time.time;
         if (shouldScore)
         {
-            Reset();
-            onPlayerScored.Invoke();
+            Score();
         }
+    }
+
+    private void Score()
+    {
+        onPlayerScored.Invoke();
+        Reset();
     }
 }

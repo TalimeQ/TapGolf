@@ -15,6 +15,7 @@ public class GameController : Singleton<GameController>
     public void Restart()
     {
         currentPlayerScore = 0;
+        uiController.UpdateScore(currentPlayerScore);
 
         Ball playerBallComponent = playerBall.GetComponent<Ball>();
         if (playerBallComponent != null)
@@ -53,7 +54,7 @@ public class GameController : Singleton<GameController>
         Ball playerBallComponent = playerBall.GetComponent<Ball>();
         if(playerBallComponent != null)
         {
-            ThrowData data = new ThrowData(currentGameMode.initialVelocity, currentGameMode.VelocityModifier, Physics2D.gravity);
+            ThrowData data = new ThrowData(currentGameMode.initialVelocity, currentGameMode.VelocityModifier, Physics2D.gravity, currentGameMode.launchOffsetPerLevel);
             playerBallComponent.Init(OnPlayerScored,OnPlayerFailed,scoreEvent,data);
         }
     }

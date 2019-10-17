@@ -5,18 +5,17 @@ using System;
 
 public class BallThrow : MonoBehaviour
 {
-
     [SerializeField] private DotPool dotPool;
 
     private ThrowData throwData;
     private Vector2 startPosition = Vector2.zero;
     private Vector2 launchVelocity;
+    private Rigidbody2D rigidBody;
 
     private bool launched = false;
-    private Rigidbody2D rigidBody;
-    private int levelLaunchModifier = 1;
     private int dotsToShow = 60;
     private float dotTimeStep = 0.05f;
+    private float levelLaunchModifier = 1.0f;
 
     public bool Launched {  get { return launched; } }
 
@@ -26,19 +25,26 @@ public class BallThrow : MonoBehaviour
         {
             rigidBody = GetComponent<Rigidbody2D>();
         }
-        onScoreCallback.AddListener(() => launched = false);
+        onScoreCallback.AddListener(OnPlayerScored);
         throwData = initialData;
     }
 
     public void OnResetRequest()
     {
         rigidBody.velocity = Vector2.zero;
+        levelLaunchModifier = 1.0f;
         launched = false;
     }
 
     private void Update()
     {
         ParseInputs();
+    }
+
+    private void OnPlayerScored()
+    {
+        launched = false;
+        levelLaunchModifier += throwData.offsetChangePerLevel;
     }
 
     private void ParseInputs()
@@ -100,14 +106,16 @@ public class BallThrow : MonoBehaviour
 }
 public struct ThrowData
 {
-    public ThrowData(Vector2 startLaunchVelocity, Vector2 velocityModifier, Vector2 gravity)
+    public ThrowData(Vector2 startLaunchVelocity, Vector2 velocityModifier, Vector2 gravity, float offsetChangePerLevel)
     {
         this.startLaunchVelocity = startLaunchVelocity;
         this.velocityModifier = velocityModifier;
         this.gravity = gravity;
+        this.offsetChangePerLevel = offsetChangePerLevel;
     }
 
     public Vector2 startLaunchVelocity;
     public Vector2 velocityModifier;
     public Vector2 gravity;
+    public float offsetChangePerLevel;
 }
