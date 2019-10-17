@@ -5,14 +5,14 @@ public class GameMode : ScriptableObject
 {
     [Header("Player")]
     public GameObject playerPrefab;
-    public Vector2 minBallSpawnCoordinates;
-    public Vector2 maxBallSpawnCoordinates;
+    public Vector2 ballSpawnCoordinates;
+    public float yBallSpawnCoordinates;
     [Space(10)]
 
     [Header("Hole")]
     public GameObject targetPrefab;
-    public Vector2 minflagSpawnCoordinates;
-    public Vector2 maxflagSpawnCoordinates;
+    public Vector2 flagSpawnCoordinates;
+    public float yFlagSpawnCoordinates;
     [Space(10)]
 
     [Header("Throw Values")]

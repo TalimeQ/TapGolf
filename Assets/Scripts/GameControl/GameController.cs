@@ -54,19 +54,19 @@ public class GameController : Singleton<GameController>
         Ball playerBallComponent = playerBall.GetComponent<Ball>();
         if(playerBallComponent != null)
         {
-            ThrowData data = new ThrowData(currentGameMode.initialVelocity, currentGameMode.VelocityModifier, Physics2D.gravity, currentGameMode.launchOffsetPerLevel);
+            ThrowData data = new ThrowData(currentGameMode.initialVelocity, currentGameMode.VelocityModifier, Physics2D.gravity, currentGameMode.launchOffsetPerLevel, currentGameMode.yBallSpawnCoordinates);
             playerBallComponent.Init(OnPlayerScored,OnPlayerFailed,scoreEvent,data);
         }
     }
 
     private void RandomizeSpawnPosition()
     {
-        float ballSpawnX = UnityEngine.Random.Range(currentGameMode.minBallSpawnCoordinates.x, currentGameMode.maxBallSpawnCoordinates.x);
-        float ballSpawnY = UnityEngine.Random.Range(currentGameMode.minBallSpawnCoordinates.y, currentGameMode.maxBallSpawnCoordinates.y);
-        float flagSpawnX = UnityEngine.Random.Range(currentGameMode.minflagSpawnCoordinates.x, currentGameMode.maxflagSpawnCoordinates.x);
-        float flagSpawnY = UnityEngine.Random.Range(currentGameMode.minflagSpawnCoordinates.y, currentGameMode.maxflagSpawnCoordinates.y);
+        float ballSpawnX = Random.Range(currentGameMode.ballSpawnCoordinates.x, currentGameMode.ballSpawnCoordinates.y);
+        float ballSpawnY = currentGameMode.yBallSpawnCoordinates;
+        float flagSpawnX = Random.Range(currentGameMode.flagSpawnCoordinates.x, currentGameMode.flagSpawnCoordinates.y);
+        float flagSpawnY = currentGameMode.yFlagSpawnCoordinates;
 
-        playerBall.transform.position = new Vector2(ballSpawnX,ballSpawnY);
+        playerBall.transform.position = new Vector2(ballSpawnX, ballSpawnY);
         target.transform.position = new Vector2(flagSpawnX, flagSpawnY);
 
         Rigidbody2D rigidbodyComponent = playerBall.GetComponent<Rigidbody2D>();

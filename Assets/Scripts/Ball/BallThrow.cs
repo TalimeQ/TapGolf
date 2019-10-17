@@ -10,12 +10,15 @@ public class BallThrow : MonoBehaviour
     private ThrowData throwData;
     private Vector2 startPosition = Vector2.zero;
     private Vector2 launchVelocity;
+
     private Rigidbody2D rigidBody;
+    private Camera mainCamera;
 
     private bool launched = false;
     private int dotsToShow = 60;
     private float dotTimeStep = 0.05f;
     private float levelLaunchModifier = 1.0f;
+    private float normalizedY;
 
     public bool Launched {  get { return launched; } }
 
@@ -27,6 +30,9 @@ public class BallThrow : MonoBehaviour
         }
         onScoreCallback.AddListener(OnPlayerScored);
         throwData = initialData;
+        mainCamera = Camera.main;
+        Vector3 startPos = new Vector3(0, initialData.ballspawnY, 0);
+        normalizedY = mainCamera.WorldToViewportPoint(startPos).y;
     }
 
     public void OnResetRequest()
@@ -45,6 +51,8 @@ public class BallThrow : MonoBehaviour
     {
         launched = false;
         levelLaunchModifier += throwData.offsetChangePerLevel;
+        rigidBody.velocity = Vector3.zero;
+        rigidBody.angularVelocity = 0.0f;
     }
 
     private void ParseInputs()
@@ -99,23 +107,35 @@ public class BallThrow : MonoBehaviour
 
     private Vector2 CalculatePosition(float elapsedTime)
     {
-        return throwData.gravity * elapsedTime * elapsedTime * 0.5f +
+        
+       Vector2 CalculatedPosition = throwData.gravity * elapsedTime * elapsedTime * 0.5f +
                    launchVelocity * elapsedTime + startPosition;
+
+        Vector3 normalizedScreenPos = mainCamera.WorldToViewportPoint(CalculatedPosition);
+
+        if (normalizedScreenPos.x > 1 && (normalizedScreenPos.y >= normalizedY && normalizedScreenPos.y <= 1))
+        {
+            Launch();
+        }
+
+        return CalculatedPosition;
     }
 
 }
 public struct ThrowData
 {
-    public ThrowData(Vector2 startLaunchVelocity, Vector2 velocityModifier, Vector2 gravity, float offsetChangePerLevel)
+    public ThrowData(Vector2 startLaunchVelocity, Vector2 velocityModifier, Vector2 gravity, float offsetChangePerLevel, float ballspawnY)
     {
         this.startLaunchVelocity = startLaunchVelocity;
         this.velocityModifier = velocityModifier;
         this.gravity = gravity;
         this.offsetChangePerLevel = offsetChangePerLevel;
+        this.ballspawnY = ballspawnY;
     }
 
     public Vector2 startLaunchVelocity;
     public Vector2 velocityModifier;
     public Vector2 gravity;
     public float offsetChangePerLevel;
+    public float ballspawnY;
 }
